@@ -19,10 +19,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+SECRET_KEY = None
+with open('secret_key.txt') as secret_key_file:
+    SECRET_KEY = secret_key_file.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-os.environ['DEBUG'] == 'False'
+DEBUG = 'False'
 
 ALLOWED_HOSTS = [
     'forest-fire-database.appspot.com',
@@ -37,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'forestFires'
+    'forestFires',
     'database',
 ]
 
@@ -52,6 +54,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'forestFires.urls'
+
 
 TEMPLATES = [
     {
@@ -115,4 +118,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/forestFires/static/'
+
+# collectstatic directory (located OUTSIDE the base directory)
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'forest-fire-static')
+
+STATICFILES_DIRS = [
+    # TODO: configure the name and path to your development static directory
+    # static directory (in the top level directory) for local testing
+    os.path.join(BASE_DIR, 'static'),
+]

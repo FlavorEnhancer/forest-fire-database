@@ -1,14 +1,18 @@
 runtime: python
 
 # the PROJECT-DIRECTORY is the one with settings.py and wsgi.py
-entrypoint: gunicorn -b :$PORT PROJECT-DIRECTORY.wsgi # specific to a GUnicorn HTTP server deployment
+entrypoint: gunicorn -b :$PORT forestFires.wsgi # specific to a GUnicorn HTTP server deployment
 env: flex # for Google Cloud Flexible App Engine
 
 # any environment variables you want to pass to your application.
 # accessible through os.environ['VARIABLE_NAME']
 env_variables:
   # the secret key used for the Django app (from PROJECT-DIRECTORY/settings.py)
-  #secret key
+  #SECRET_KEY = None
+  #with open('secret_key.txt') as secret_key_file:
+  #SECRET_KEY: secret_key_file.readline()
+  SECRET_KEY: os.getenv("SECRET_KEY")
+
   DEBUG: 'False' # always False for deployment
 
   # everything after /cloudsql/ can be found by entering >> gcloud sql instances describe DATABASE-NAME << in your Terminal
@@ -26,9 +30,9 @@ handlers:
   - url: /static
     static_dir: static
 
-    beta_settings:
-      # from command >> gcloud sql instances describe DATABASE-NAME <<
-      cloud_sql_instances: forest-fire-db
+beta_settings:
+  # from command >> gcloud sql instances describe DATABASE-NAME <<
+  cloud_sql_instances: "forest-fire-database:us-west2:forest-fire-db"
 
-    runtime_config:
-      python_version: 3 # enter your Python version BASE ONLY here. Enter 2 for 2.7.9 or 3 for 3.6.4
+runtime_config:
+  python_version: 3 # enter your Python version BASE ONLY here. Enter 2 for 2.7.9 or 3 for 3.6.4
