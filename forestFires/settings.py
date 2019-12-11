@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'forestFires',
-    'database',
 ]
 
 MIDDLEWARE = [
@@ -79,11 +78,14 @@ WSGI_APPLICATION = 'forestFires.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'forest-fire-db',
-        'USER': 'postgres',
-        'PASSWORD': 'fightdemfires',
-        'PORT': '5432',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': 'forest-fire-db',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'fightdemfires',
+        #  'PORT': '5432',
+
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'database.db',
 
     }
 }
